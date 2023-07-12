@@ -23,7 +23,9 @@ OBJS 			=	${addprefix ${DIR_OBJS}/, ${SRC:.c=.o}}
 
 # ---- Variables ---- #
 
-DEBUG			=	no
+DEBUG_A			=	no
+
+DEBUG_T			=	no
 
 VALGRIND		= 	no
 
@@ -41,19 +43,21 @@ CFLAGS 			= -Wall  -Wextra -Werror -I ${DIR_HEAD}
 
 # ---- Debug Compilation flags ---- #
 
-DFLAGS			= -g3 -fsanitize=address
+DFLAGS		=	-g3 -fsanitize=address
+ifeq (${DEBUG_A}, yes)
+CFLAGS 		+=	${DFLAGS}
+endif
 
-ifeq (${DEBUG}, yes)
-CFLAGS		+= ${DFLAGS}
+DFLAGS		=	-g3 -fsanitize=thread
+ifeq (${DEBUG_T}, yes)
+CFLAGS 		+=	${DFLAGS}
 endif
 
 # ---- Leaks Compilation flags ---- #
 
-LEAKS			=	valgrind 
+LEAKS			=	valgrind --tool=helgrind 
 
-#--track-fds=yes
-
-
+#--tool=drd
 
 # ====================== RULES ====================== #
 
@@ -63,7 +67,7 @@ all :
 	${MAKE} ${NAME}
 
 ${NAME}: ${OBJS} 
-	${CC} ${CFLAGS} $^ -o $@ 
+	${CC} ${CFLAGS} $^ -o $@ -pthread
 
 ${DIR_OBJS}/%.o: %.c ${HEAD} 
 	@mkdir -p ${dir $@}
@@ -71,16 +75,17 @@ ${DIR_OBJS}/%.o: %.c ${HEAD}
 	
 # ---- Debug rules ---- #
 
-debug:
-	${MAKE} re DEBUG=yes
-	
+debug_address:
+	${MAKE} re DEBUG_A=yes
 
+debug_thread:
+	${MAKE} re DEBUG_T=yes
 # ---- Leaks rules ---- #
 	
 leaks:
 	clear
 	${MAKE} re VALGRIND=yes
-	${LEAKS} ./minishell
+	${LEAKS} ./philo
 
 # ---- Clean rules --- #
 
@@ -93,4 +98,4 @@ fclean : clean
 re : fclean
 	${MAKE} all
 
-.PHONY: all  clean fclean re
+.PHONY: all leaks debug_address debug_thread re clean fclean
