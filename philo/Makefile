@@ -7,7 +7,8 @@ NAME 			=	philo
 HEAD 			=	head/philo.h
 
 SRC 			= 	philo.c \
-					src/print.c
+					src/parsing.c \
+					src/utils.c
 
 # ---- Directories ---- #
 

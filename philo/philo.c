@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:59:45 by lciullo           #+#    #+#             */
-/*   Updated: 2023/07/12 11:34:40 by lisa             ###   ########.fr       */
+/*   Updated: 2023/07/18 01:34:00 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	main(void)
+int	main(int ac, char **av)
 {
-	print_a(3);
+	parsing_arg(ac, av);
 	return (0);
 }
