@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:59:45 by lciullo           #+#    #+#             */
-/*   Updated: 2023/07/18 01:34:00 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/07/19 11:57:17 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 int	main(int ac, char **av)
 {
+	t_philo	data;
+	 
+	init_struct(&data);
 	parsing_arg(ac, av);
 	return (0);
 }

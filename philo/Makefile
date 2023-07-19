@@ -7,7 +7,9 @@ NAME 			=	philo
 HEAD 			=	head/philo.h
 
 SRC 			= 	philo.c \
+					src/ft_atoi.c \
 					src/parsing.c \
+					src/struct.c \
 					src/utils.c
 
 # ---- Directories ---- #
