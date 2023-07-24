@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+         #
+#    By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/20 13:49:00 by lciullo           #+#    #+#              #
-#    Updated: 2023/07/20 13:49:02 by lciullo          ###   ########.fr        #
+#    Updated: 2023/07/24 13:31:29 by lisa             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # ====================== VARIABLES ====================== #
 
-# ---- Final executable ---- #
+# ---- Final execuphilo ---- #
 
 NAME 			=	philo
 
@@ -21,7 +21,8 @@ HEAD 			=	head/philo.h
 SRC 			= 	philo.c \
 					src/ft_atoi.c \
 					src/parsing.c \
-					src/struct.c \
+					src/fill_struct.c \
+					src/fill_each_philo.c \
 					src/utils.c
 
 # ---- Directories ---- #

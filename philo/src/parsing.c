@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 00:35:01 by lciullo           #+#    #+#             */
-/*   Updated: 2023/07/20 15:58:14 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/07/24 15:25:28 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,21 @@
 
 static int	nb_of_arguments(int ac);
 static int	is_valid(char **av);
-static int	convert_and_check_overflow(t_philo *data, char **av);
-static int	is_valid_integer_value(t_philo *data);
+static int	convert_and_check_overflow(t_arg *shared, char **av);
+static int	is_valid_integer_value(t_arg *shared);
 
-int	parsing_arg(t_philo *data, int ac, char **av)
+int	parsing_input(t_arg *shared, int ac, char **av)
 {
 	if (nb_of_arguments(ac) == FAILURE)
 		return (FAILURE);
 	if (is_valid(av) == FAILURE)
 		return (FAILURE);
-	if (convert_and_check_overflow(data, av) == FAILURE)
+	if (convert_and_check_overflow(shared, av) == FAILURE)
+	{	
+		printf("The digit has overflow\n");
 		return (FAILURE);
-	if (is_valid_integer_value(data) == FAILURE)
+	}
+	if (is_valid_integer_value(shared) == FAILURE)
 		return (FAILURE);
 	return (SUCCESS);
 }
@@ -34,8 +37,8 @@ static int	nb_of_arguments(int ac)
 {
 	if (ac != 6 && ac != 5)
 	{
-		ft_putstr_fd("Warning : wrong number of arguments\n", 2);
-		ft_putstr_fd("Usage : use five or six arguments\n", 2);
+		printf("Warning : wrong number of arguments\n");
+		printf("Usage : use five or six arguments\n");
 		return (FAILURE);
 	}
 	return (SUCCESS);
@@ -55,7 +58,7 @@ static int	is_valid(char **av)
 		{
 			if (ft_isdigit(av[row][i]) == FAILURE)
 			{
-				ft_putstr_fd("Enter only digit without sign\n", 2);
+				printf("Enter only digit without sign\n");
 				return (FAILURE);
 			}
 			i++;
@@ -65,39 +68,42 @@ static int	is_valid(char **av)
 	return (SUCCESS);
 }
 
-static int	convert_and_check_overflow(t_philo *data, char **av)
+static int	convert_and_check_overflow(t_arg *shared, char **av)
 {
-	data->arg.nb_philo = ft_atoi(av[1]);
-	if (data->arg.nb_philo == FAILURE)
+	shared->nb_philo = ft_atoi(av[1]);
+	if (shared->nb_philo == FAILURE)
 		return (FAILURE);
-	data->arg.time_to_die = ft_atoi(av[2]);
-	if (data->arg.time_to_die == FAILURE)
+	shared->time_to_die = ft_atoi(av[2]);
+	if (shared->time_to_die == FAILURE)
 		return (FAILURE);
-	data->arg.time_to_eat = ft_atoi(av[3]);
-	if (data->arg.time_to_eat == FAILURE)
+	shared->time_to_eat = ft_atoi(av[3]);
+	if (shared->time_to_eat == FAILURE)
 		return (FAILURE);
-	data->arg.time_to_sleep = ft_atoi(av[4]);
-	if (data->arg.time_to_sleep == FAILURE)
+	shared->time_to_sleep = ft_atoi(av[4]);
+	if (shared->time_to_sleep == FAILURE)
 		return (FAILURE);
 	if (av[5] && ft_strcmp(av[5], "0"))
 	{
-		data->arg.nb_meals = ft_atoi(av[5]);
-		if (data->arg.nb_meals == FAILURE)
+		shared->nb_meals = ft_atoi(av[5]);
+		if (shared->nb_meals == FAILURE)
 			return (FAILURE);
 	}
 	return (SUCCESS);
 }
 
-static int	is_valid_integer_value(t_philo *data)
+static int	is_valid_integer_value(t_arg *shared)
 {
-	if ((data->arg.nb_philo <= 0) || (data->arg.time_to_die <= 0)
-		|| (data->arg.time_to_eat <= 0) || (data->arg.time_to_sleep <= 0))
-		return (FAILURE);
-	if ((data->arg.time_to_die < 60) || (data->arg.time_to_eat < 60)
-		|| (data->arg.time_to_sleep < 60))
+	if ((shared->nb_philo <= 0) || (shared->time_to_die <= 0)
+		|| (shared->time_to_eat <= 0) || (shared->time_to_sleep <= 0))
 	{
-		ft_putstr_fd("Warning\n", 2);
-		ft_putstr_fd("With value bellow 60 the program might not run good\n", 2);
+		printf("Error, send digit greater than or equal to zéro\n");
+		return (FAILURE);	
+	}
+	if ((shared->time_to_die < 60) || (shared->time_to_eat < 60)
+		|| (shared->time_to_sleep < 60))
+	{
+		printf("Warning\n");
+		printf("With value bellow 60 the program might not run good\n");
 	}
 	return (SUCCESS);
 }
