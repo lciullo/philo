@@ -6,7 +6,7 @@
 /*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:40:00 by lciullo           #+#    #+#             */
-/*   Updated: 2023/07/24 14:48:50 by lisa             ###   ########.fr       */
+/*   Updated: 2023/07/24 16:30:39 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,9 @@ enum {
 	FAILURE = -1,
 	SUCCESS = 2,
 	TRUE = 1,
-	FALSE = 0
-	
+	FALSE = 0,
+	AVAILABLE = 3,
+	UNAVAILABLE = 4
 };
 
 typedef struct s_shared {
@@ -49,10 +50,10 @@ typedef struct s_single {
 	
 	int				id;
 	pthread_t		thread_id;
-	pthread_mutex_t	mute_left_fork; //verrouille les fourchettes
-	pthread_mutex_t	*mute_right_fork;
-	int				left_fork;
-	int				*right_fork;
+	pthread_mutex_t	*mute_left_fork; //verrouille les fourchettes
+	pthread_mutex_t	mute_right_fork;
+	int				*left_fork;
+	int				right_fork;
 	int				time_start_meal;
 	int				time_end_meal;
 	int				time_start_sleep;
@@ -77,4 +78,6 @@ void	*ft_calloc(size_t nb_elements, size_t size);
 void	init_single(t_arg *shared);
 int		parsing_input(t_arg *shared, int ac, char **av);
 int		allocated_struct_for_each_philo(t_arg *shared);
+int 	fill_each_philo(t_arg *data);
+
 #endif
