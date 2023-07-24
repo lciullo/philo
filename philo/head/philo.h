@@ -6,7 +6,7 @@
 /*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:40:00 by lciullo           #+#    #+#             */
-/*   Updated: 2023/07/24 16:30:39 by lisa             ###   ########.fr       */
+/*   Updated: 2023/07/24 17:36:11 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <pthread.h>
 # include <stdio.h>
 # include <stdlib.h>
-#include <stdint.h>
+# include <stdint.h>
 
 typedef struct s_single t_single;
 
@@ -31,7 +31,7 @@ enum {
 	UNAVAILABLE = 4
 };
 
-typedef struct s_shared {
+typedef struct s_arg {
 	
 	int				nb_philo;
 	int				time_to_die;
@@ -50,8 +50,8 @@ typedef struct s_single {
 	
 	int				id;
 	pthread_t		thread_id;
-	pthread_mutex_t	*mute_left_fork; //verrouille les fourchettes
-	pthread_mutex_t	mute_right_fork;
+	pthread_mutex_t	*m_left_fork; //verrouille les fourchettes
+	pthread_mutex_t	m_right_fork;
 	int				*left_fork;
 	int				right_fork;
 	int				time_start_meal;
@@ -75,9 +75,9 @@ void	*ft_calloc(size_t nb_elements, size_t size);
 
 //=== Philo === //
 
-void	init_single(t_arg *shared);
+void	init_shared_struct(t_arg *shared);
 int		parsing_input(t_arg *shared, int ac, char **av);
-int		allocated_struct_for_each_philo(t_arg *shared);
-int 	fill_each_philo(t_arg *data);
+int		allocated_struct_of_philo(t_arg *shared);
+int 	loop_to_init_each_philo(t_arg *data);
 
 #endif

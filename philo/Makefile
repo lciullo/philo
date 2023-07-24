@@ -6,7 +6,7 @@
 #    By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/20 13:49:00 by lciullo           #+#    #+#              #
-#    Updated: 2023/07/24 13:31:29 by lisa             ###   ########.fr        #
+#    Updated: 2023/07/24 17:19:16 by lisa             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,8 @@ HEAD 			=	head/philo.h
 SRC 			= 	philo.c \
 					src/ft_atoi.c \
 					src/parsing.c \
-					src/fill_struct.c \
-					src/fill_each_philo.c \
+					src/fill_struct_of_philo.c \
+					src/routine.c \
 					src/utils.c
 
 # ---- Directories ---- #
