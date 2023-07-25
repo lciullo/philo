@@ -6,7 +6,7 @@
 /*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:40:00 by lciullo           #+#    #+#             */
-/*   Updated: 2023/07/24 17:36:11 by lisa             ###   ########.fr       */
+/*   Updated: 2023/07/25 15:51:54 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <stdint.h>
+# include <string.h>
 
 typedef struct s_single t_single;
 
@@ -78,6 +79,7 @@ void	*ft_calloc(size_t nb_elements, size_t size);
 void	init_shared_struct(t_arg *shared);
 int		parsing_input(t_arg *shared, int ac, char **av);
 int		allocated_struct_of_philo(t_arg *shared);
-int 	loop_to_init_each_philo(t_arg *data);
+int 	loop_to_init_each_philo(t_arg *shared);
+int 	loop_for_routine(t_single *philo);
 
 #endif

@@ -6,13 +6,13 @@
 /*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 09:45:57 by lciullo           #+#    #+#             */
-/*   Updated: 2023/07/24 17:36:11 by lisa             ###   ########.fr       */
+/*   Updated: 2023/07/25 15:58:21 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static int  fill_each_philo(t_single *philo, t_single *last_philo, t_arg *data);
+static int	fill_each_philo(t_single *philo, t_single *last, t_arg *shared, int i);
 
 void	init_shared_struct(t_arg *shared)
 {
@@ -21,6 +21,11 @@ void	init_shared_struct(t_arg *shared)
 	shared->time_to_eat = 0;
 	shared->time_to_sleep = 0;
 	shared->nb_meals = -1;	
+	shared->is_end = FALSE;
+	shared->enough_eat = FALSE;
+	pthread_mutex_init(&(shared->launcher), NULL);
+	pthread_mutex_init(&(shared->gossiper), NULL);
+	pthread_mutex_init(&(shared->controller), NULL);
 }
 
 int	allocated_struct_of_philo(t_arg *shared)
@@ -39,36 +44,42 @@ int	allocated_struct_of_philo(t_arg *shared)
 	return (SUCCESS);
 }
 
-int loop_to_init_each_philo(t_arg *data)
+int	loop_to_init_each_philo(t_arg *shared)
 {
 	int i;
 
 	i = 0;
-	ft_bzero(&data->philo, sizeof(t_single));
-	while (i < data->nb_philo)
+	memset(shared->philo, 0, shared->nb_philo);
+	while (i < shared->nb_philo)
 	{
 		if (i == 0)
-			fill_each_philo(&(data->philo)[i], NULL, data);
+			fill_each_philo(&(shared->philo)[i], NULL, shared, i);
 		else
-			fill_each_philo(&(data->philo)[i], &(data->philo)[i - 1], data);
+			fill_each_philo(&(shared->philo)[i], &(shared->philo)[i - 1], shared, i);
 		i++;
 	}
-	(data->philo)[0].left_fork = &((data->philo)[i - 1].right_fork);
-	(data->philo)[0].m_left_fork = &((data->philo)[i - 1].m_right_fork);
+	(shared->philo)[0].left_fork = &((shared->philo)[i - 1].right_fork);
+	(shared->philo)[0].m_left_fork = &((shared->philo)[i - 1].m_right_fork);
 	return (SUCCESS);
 }
 
-static int  fill_each_philo(t_single *philo, t_single *last_philo, t_arg *data)
+static int	fill_each_philo(t_single *philo, t_single *last, t_arg *shared, int i)
 {
-	philo->is_dead = FALSE;
-	philo->lifespan = data->time_to_die;
-	philo->nb_meals_eaten = 0;
+	philo->id = i + 1;
 	philo->right_fork = AVAILABLE;
 	pthread_mutex_init(&(philo->m_right_fork), NULL);
-	if (last_philo != NULL)
+	if (last != NULL)
 	{	
-		philo->left_fork = &(last_philo->right_fork);
+		philo->left_fork = &(last->right_fork);
 		philo->m_left_fork = &(philo->m_right_fork);
 	}
+	philo->time_start_meal = 0;
+	philo->time_end_meal = 0;
+	philo->time_start_sleep = 0;
+	philo->time_end_sleep = 0;
+	philo->nb_meals_eaten = 0;
+	philo->lifespan = shared->time_to_die;
+	philo->is_dead = FALSE;
+	philo->shared = shared;
 	return (SUCCESS);
 }
