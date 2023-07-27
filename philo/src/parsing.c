@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 00:35:01 by lciullo           #+#    #+#             */
-/*   Updated: 2023/07/24 15:25:28 by lisa             ###   ########.fr       */
+/*   Updated: 2023/07/27 13:16:10 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	parsing_input(t_arg *shared, int ac, char **av)
 	if (is_valid(av) == FAILURE)
 		return (FAILURE);
 	if (convert_and_check_overflow(shared, av) == FAILURE)
-	{	
+	{
 		printf("The digit has overflow\n");
 		return (FAILURE);
 	}
@@ -97,7 +97,7 @@ static int	is_valid_integer_value(t_arg *shared)
 		|| (shared->time_to_eat <= 0) || (shared->time_to_sleep <= 0))
 	{
 		printf("Error, send digit greater than or equal to zéro\n");
-		return (FAILURE);	
+		return (FAILURE);
 	}
 	if ((shared->time_to_die < 60) || (shared->time_to_eat < 60)
 		|| (shared->time_to_sleep < 60))
