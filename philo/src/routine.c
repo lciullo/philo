@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 12:00:19 by lciullo           #+#    #+#             */
-/*   Updated: 2023/07/27 17:54:15 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/07/30 15:52:33 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,17 @@ int	loop_struct(t_arg *shared)
 	pthread_mutex_lock(&(shared->launcher));
 	while (i < shared->nb_philo)
 	{
-		if (pthread_create(&shared->philo[i].thread_id, NULL, (void *)routine, &shared->philo[i]) != 0)
+		if (pthread_create(&(shared->philo[i].thread_id), NULL, (void *)routine, &(shared->philo[i])) != 0)
 			perror("je ne pense pas que c'est la");
 		i++;
 	}
+	i = 0;
 	pthread_mutex_unlock(&(shared->launcher));
+	while (i < shared->nb_philo)
+	{
+		pthread_join(shared->philo[i].thread_id, NULL);
+		i++;
+	}
 	return (0);
 }
 
