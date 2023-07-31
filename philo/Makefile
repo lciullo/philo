@@ -6,7 +6,7 @@
 #    By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/20 13:49:00 by lciullo           #+#    #+#              #
-#    Updated: 2023/07/27 13:17:48 by lciullo          ###   ########.fr        #
+#    Updated: 2023/07/31 10:32:11 by lciullo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRC 			= 	philo.c \
 					src/ft_atoi.c \
 					src/parsing.c \
 					src/fill_struct_of_philo.c \
+					src/launch_philo.c \
 					src/routine.c \
 					src/get_time.c \
 					src/utils.c

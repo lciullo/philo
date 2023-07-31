@@ -6,51 +6,32 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 12:00:19 by lciullo           #+#    #+#             */
-/*   Updated: 2023/07/30 15:52:33 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/07/31 14:37:04 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	routine(t_single *philo);
-// static	int	take_fork(t_single *philo);
-// static	int	eating(t_single *philo);
-// static	int	put_down_fork(t_single *philo);
-// static	int	sleeping(t_single *philo);
-//static void	check_death(t_single *philo);
+void		routine(t_single *philo);
+/*static int	take_fork(t_single *philo);
+static int	eating(t_single *philo);
+static int	put_down_fork(t_single *philo);
+static int	sleeping(t_single *philo);
+static void	check_death(t_single *philo);*/
 
 //boucler sur la structure de philo
 
-int	loop_struct(t_arg *shared)
+void	routine(t_single *philo)
 {
-	int	i;
+	long	current_time;
 
-	i = 0;
-	pthread_mutex_lock(&(shared->launcher));
-	while (i < shared->nb_philo)
-	{
-		if (pthread_create(&(shared->philo[i].thread_id), NULL, (void *)routine, &(shared->philo[i])) != 0)
-			perror("je ne pense pas que c'est la");
-		i++;
-	}
-	i = 0;
-	pthread_mutex_unlock(&(shared->launcher));
-	while (i < shared->nb_philo)
-	{
-		pthread_join(shared->philo[i].thread_id, NULL);
-		i++;
-	}
-	return (0);
-}
-
-static void	routine(t_single *philo)
-{
+	current_time = get_time(&philo->shared->time_start_prog);
 	pthread_mutex_lock(&(philo->shared->launcher));
 	pthread_mutex_unlock(&(philo->shared->launcher));
-	printf("hey je suis philo numero : %d\n", philo->id);
+	printf("%ld is thinking, philo number %d\n", current_time, philo->id);
 }
-/*
-static	int	take_fork(t_single *philo)
+
+/*static	int	take_fork(t_single *philo)
 {
 	if (philo->right_fork == AVAILABLE)
 	{
@@ -114,15 +95,13 @@ static	int	sleeping(t_single *philo)
 		time = get_time(&(philo->shared->time_start_prog));
 	return (SUCCESS);
 }
-*/
-/*//static void	check_death(t_single *philo)
+static void	check_death(t_single *philo)
 {
-	int	actual_time;
+	int	current_time;
 	int	last_meal;
 
-	actual_time = get_time(&(philo->shared->time_start_prog));
-	last_meal = actual_time - philo->time_end_meal;
+	current_time = get_time(&(philo->shared->time_start_prog));
+	last_meal = current_time - philo->time_end_meal;
 	if (last_meal > philo->shared->time_to_die)
 		philo->is_dead = TRUE;
-}
-*/
+}*/

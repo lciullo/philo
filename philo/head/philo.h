@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:40:00 by lciullo           #+#    #+#             */
-/*   Updated: 2023/07/27 16:56:49 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/07/31 14:31:53 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_single {
 	long int		lifespan;
 	int				is_dead;
 	int				nb_fork;
+	struct timeval	current_time;
 	t_arg			*shared;
 }	t_single;
 
@@ -76,11 +77,11 @@ void	*ft_calloc(size_t nb_elements, size_t size);
 
 //=== Philo === //
 
-void	init_shared_struct(t_arg *shared);
+int		init_shared_struct(t_arg *shared);
 int		parsing_input(t_arg *shared, int ac, char **av);
 int		allocated_struct_of_philo(t_arg *shared);
 int		loop_to_init_each_philo(t_arg *shared);
-// int		loop_struct(t_single *philo);
 int		loop_struct(t_arg *shared);
-int		get_time(struct timeval *time_start_prog);
+long	get_time(struct timeval *time_start_prog);
+void	routine(t_single *philo);
 #endif

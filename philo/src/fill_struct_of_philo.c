@@ -6,15 +6,16 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 09:45:57 by lciullo           #+#    #+#             */
-/*   Updated: 2023/07/27 17:58:13 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/07/31 11:23:47 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static int	fill_each_philo(t_single *philo, t_single *last, t_arg *shared, int i);
+static int	fill_each_philo(t_single *philo, t_single *last, \
+				t_arg *shared, int i);
 
-void	init_shared_struct(t_arg *shared)
+int	init_shared_struct(t_arg *shared)
 {
 	shared->nb_philo = 0;
 	shared->time_to_die = 0;
@@ -23,42 +24,49 @@ void	init_shared_struct(t_arg *shared)
 	shared->nb_meals = -1;
 	shared->is_end = FALSE;
 	shared->enough_eat = FALSE;
-	if (pthread_mutex_init(&(shared->launcher), NULL) == -1)
-		perror("ce mutex la");
-	if (pthread_mutex_init(&(shared->gossiper), NULL) == -1)
-		perror("ce mutex ci");
-	if (pthread_mutex_init(&(shared->controller), NULL) == -1)
-		perror("ce mutex ici");
+	if (pthread_mutex_init(&(shared->launcher), NULL) == FAILURE)
+	{
+		perror("Init mutex launcher failed");
+		return (FAILURE);
+	}
+	if (pthread_mutex_init(&(shared->gossiper), NULL) == FAILURE)
+	{
+		perror("Init mutex gossiper failed");
+		return (FAILURE);
+	}
+	if (pthread_mutex_init(&(shared->controller), NULL) == FAILURE)
+	{
+		perror("Init mutex controller failed");
+		return (FAILURE);
+	}
+	return (SUCCESS);
 }
 
 int	allocated_struct_of_philo(t_arg *shared)
 {
-	//on créer l'espace pour les structures "portes"
 	shared->philo = ft_calloc(shared->nb_philo, sizeof(t_single));
 	if (!shared->philo)
 	{
 		printf("Malloc failed ft_calloc\n");
 		return (FAILURE);
 	}
-	/* à partir d'ici on peut se balader de structure en structure
-	on peut faire un shared->philo[i]
-	on doit donner une porte dans le sens inverse*/
 	loop_to_init_each_philo(shared);
 	return (SUCCESS);
 }
 
 int	loop_to_init_each_philo(t_arg *shared)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	// memset(shared->philo, 0, shared->nb_philo);
+	memset(shared->philo, 0, shared->nb_philo);
 	while (i < shared->nb_philo)
 	{
 		if (i == 0)
 			fill_each_philo(&shared->philo[i], NULL, shared, i);
 		else
-			fill_each_philo(&shared->philo[i], &shared->philo[i - 1], shared, i);
+			fill_each_philo(&shared->philo[i], \
+					&shared->philo[i - 1], shared, i);
 		i++;
 	}
 	shared->philo[0].left_fork = &(shared->philo[i - 1].right_fork);
@@ -66,12 +74,13 @@ int	loop_to_init_each_philo(t_arg *shared)
 	return (SUCCESS);
 }
 
-static int	fill_each_philo(t_single *philo, t_single *last, t_arg *shared, int i)
+static int	fill_each_philo(t_single *philo, t_single *last, \
+			t_arg *shared, int i)
 {
 	philo->id = i + 1;
 	philo->right_fork = AVAILABLE;
-	if (pthread_mutex_init(&(philo->m_right_fork), NULL) == -1)
-		perror("ce mutex je");
+	if (pthread_mutex_init(&(philo->m_right_fork), NULL) == FAILURE)
+		return (FAILURE);
 	if (last != NULL)
 	{
 		philo->left_fork = &(last->right_fork);
