@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:40:00 by lciullo           #+#    #+#             */
-/*   Updated: 2023/07/31 14:31:53 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/07/31 15:43:35 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,5 @@ int		loop_to_init_each_philo(t_arg *shared);
 int		loop_struct(t_arg *shared);
 long	get_time(struct timeval *time_start_prog);
 void	routine(t_single *philo);
+int		display_routine(t_single *philo, char *action);
 #endif

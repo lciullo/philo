@@ -6,7 +6,7 @@
 #    By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/20 13:49:00 by lciullo           #+#    #+#              #
-#    Updated: 2023/07/31 10:32:11 by lciullo          ###   ########.fr        #
+#    Updated: 2023/07/31 15:31:02 by lciullo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,8 @@ SRC 			= 	philo.c \
 					src/launch_philo.c \
 					src/routine.c \
 					src/get_time.c \
-					src/utils.c
+					src/print.c \
+					src/libft_utils.c
 
 # ---- Directories ---- #
 
