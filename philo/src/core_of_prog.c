@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 10:31:38 by lciullo           #+#    #+#             */
-/*   Updated: 2023/08/01 17:37:45 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/08/01 19:18:22 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	loop_struct(t_arg *shared)
 	int	i;
 
 	i = 0;
-	gettimeofday(&shared->time_start_prog, NULL);
 	pthread_mutex_lock(&(shared->launcher));
 	while (i < shared->nb_philo)
 	{
@@ -34,6 +33,7 @@ int	loop_struct(t_arg *shared)
 		i++;
 	}
 	pthread_mutex_unlock(&(shared->launcher));
+	gettimeofday(&shared->time_start_prog, NULL);
 	end_prog(shared);
 	join_philo(shared);
 	return (SUCCESS);

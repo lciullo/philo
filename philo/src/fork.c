@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 17:09:04 by lciullo           #+#    #+#             */
-/*   Updated: 2023/08/01 17:51:51 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/08/01 19:35:05 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,15 @@ int	take_fork(t_single *philo)
 	{
 		philo->right_fork = UNAVAILABLE;
 		philo->nb_fork++;
+		pthread_mutex_lock(&(philo->m_right_fork));
+		pthread_mutex_unlock(&(philo->m_right_fork));
 	}
 	if (*(philo->left_fork) == AVAILABLE)
 	{
 		*(philo->left_fork) = UNAVAILABLE;
 		philo->nb_fork++;
+		pthread_mutex_lock(philo->m_left_fork);
+		pthread_mutex_unlock(philo->m_left_fork);
 	}
 	if (philo->nb_fork == 2)
 	{

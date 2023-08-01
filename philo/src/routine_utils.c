@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 17:39:40 by lciullo           #+#    #+#             */
-/*   Updated: 2023/08/01 17:50:47 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/08/01 19:20:11 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	display_routine(t_single *philo, int action)
 	long	current_time;
 
 	current_time = 0;
+	pthread_mutex_lock(&(philo->shared->speaker));
+	pthread_mutex_unlock(&(philo->shared->speaker));
 	current_time = get_time(&philo->shared->time_start_prog);
 	if (EAT == action)
 		printf("%ld %d is eating\n", current_time, philo->id);

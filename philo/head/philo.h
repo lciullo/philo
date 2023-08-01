@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:40:00 by lciullo           #+#    #+#             */
-/*   Updated: 2023/08/01 17:52:12 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/08/01 19:26:54 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,16 @@ typedef struct s_arg {
 	int				is_end_unlock;
 	int				enough_eat;
 	struct timeval	time_start_prog;
-	pthread_mutex_t	launcher; //lance tous les philos en même temps
-	pthread_mutex_t	speaker; //il annonce logs nouvelles speaker
-	pthread_mutex_t	watcher; // il check les infos 
+	pthread_mutex_t	launcher;
+	pthread_mutex_t	speaker;
+	pthread_mutex_t	watcher;
 	t_single		*philo;
 }	t_arg;
 
 typedef struct s_single {
 	int				id;
 	pthread_t		thread_id;
-	pthread_mutex_t	*m_left_fork; //verrouille les fourchettes
+	pthread_mutex_t	*m_left_fork;
 	pthread_mutex_t	m_right_fork;
 	int				*left_fork;
 	int				right_fork;
