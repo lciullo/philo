@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 00:35:01 by lciullo           #+#    #+#             */
-/*   Updated: 2023/07/27 13:16:10 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/08/01 17:54:59 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	nb_of_arguments(int ac);
 static int	is_valid(char **av);
-static int	convert_and_check_overflow(t_arg *shared, char **av);
+static int	convert_and_check_overflow(t_arg *shared, char **av, int ac);
 static int	is_valid_integer_value(t_arg *shared);
 
 int	parsing_input(t_arg *shared, int ac, char **av)
@@ -23,7 +23,7 @@ int	parsing_input(t_arg *shared, int ac, char **av)
 		return (FAILURE);
 	if (is_valid(av) == FAILURE)
 		return (FAILURE);
-	if (convert_and_check_overflow(shared, av) == FAILURE)
+	if (convert_and_check_overflow(shared, av, ac) == FAILURE)
 	{
 		printf("The digit has overflow\n");
 		return (FAILURE);
@@ -68,7 +68,7 @@ static int	is_valid(char **av)
 	return (SUCCESS);
 }
 
-static int	convert_and_check_overflow(t_arg *shared, char **av)
+static int	convert_and_check_overflow(t_arg *shared, char **av, int ac)
 {
 	shared->nb_philo = ft_atoi(av[1]);
 	if (shared->nb_philo == FAILURE)
@@ -82,7 +82,7 @@ static int	convert_and_check_overflow(t_arg *shared, char **av)
 	shared->time_to_sleep = ft_atoi(av[4]);
 	if (shared->time_to_sleep == FAILURE)
 		return (FAILURE);
-	if (av[5] && ft_strcmp(av[5], "0"))
+	if (ac == 6)
 	{
 		shared->nb_meals = ft_atoi(av[5]);
 		if (shared->nb_meals == FAILURE)

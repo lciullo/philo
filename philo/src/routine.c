@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 12:00:19 by lciullo           #+#    #+#             */
-/*   Updated: 2023/08/01 17:11:38 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/08/01 17:51:17 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	routine(t_single *philo)
 	current_time = get_time(&philo->shared->time_start_prog);
 	pthread_mutex_lock(&(philo->shared->launcher));
 	pthread_mutex_unlock(&(philo->shared->launcher));
-	display_routine(philo, "THINK");
+	display_routine(philo, THINK);
 	eating(philo);
 	put_down_fork(philo);
 	sleeping(philo);
@@ -40,7 +40,7 @@ static	int	eating(t_single *philo)
 		*(philo->left_fork) == UNAVAILABLE && philo->nb_fork == 2)
 	{
 		philo->time_start_meal = get_time(&(philo->shared->time_start_prog));
-		display_routine(philo, "EAT");
+		display_routine(philo, EAT);
 		philo->time_end_meal = philo->time_start_meal + philo->shared->time_to_eat;
 		if (philo->is_dead == TRUE)
 			return (FAILURE);
@@ -56,7 +56,7 @@ static	int	sleeping(t_single *philo)
 
 	time = 0;
 	philo->time_start_sleep = get_time(&(philo->shared->time_start_prog));
-	display_routine(philo, "SLEEP");
+	display_routine(philo, SLEEP);
 	philo->time_end_sleep = philo->time_start_sleep  + philo->shared->time_to_sleep;
 	if (philo->is_dead == TRUE)
 		return (FAILURE);

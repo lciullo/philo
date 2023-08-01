@@ -6,11 +6,13 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 17:09:04 by lciullo           #+#    #+#             */
-/*   Updated: 2023/08/01 17:10:15 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/08/01 17:51:51 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+/*penser au cas ou il n'y a qu'une fourchette un seul philo*/
 
 int	take_fork(t_single *philo)
 {
@@ -26,8 +28,8 @@ int	take_fork(t_single *philo)
 	}
 	if (philo->nb_fork == 2)
 	{
-		display_routine(philo, "FORK");
-		display_routine(philo, "FORK");
+		display_routine(philo, FORK);
+		display_routine(philo, FORK);
 		return (SUCCESS);
 	}
 	return (FAILURE);

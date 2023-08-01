@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+         #
+#    By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/20 13:49:00 by lciullo           #+#    #+#              #
-#    Updated: 2023/08/01 10:39:19 by lisa             ###   ########.fr        #
+#    Updated: 2023/08/01 17:54:02 by lciullo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,15 +19,13 @@ NAME 			=	philo
 HEAD 			=	head/philo.h
 
 SRC 			= 	philo.c \
-					src/ft_atoi.c \
-					src/parsing.c \
+					src/core_of_prog.c \
 					src/fill_struct.c \
-					src/launch_philo.c \
-					src/routine.c \
-					src/get_time.c \
-					src/print.c \
+					src/fork.c \
 					src/libft_utils.c \
-					src/fork.c 
+					src/parsing.c \
+					src/routine_utils.c \
+					src/routine.c
 
 # ---- Directories ---- #
 

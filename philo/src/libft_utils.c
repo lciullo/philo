@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   libft_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:58:58 by lciullo           #+#    #+#             */
-/*   Updated: 2023/07/24 11:24:31 by lisa             ###   ########.fr       */
+/*   Updated: 2023/08/01 17:52:21 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,29 @@ int	ft_isdigit(int c)
 	return (FAILURE);
 }
 
-int	ft_strcmp(char *s1, char *s2)
+int	ft_atoi(const char *str)
 {
-	int	i;
+	int			i;
+	size_t		len;
+	long		result;
+	int			sign;
 
 	i = 0;
-	if (!s1 || !s2)
+	result = 0;
+	sign = 1;
+	len = ft_strlen(str);
+	if (len > 10)
 		return (FAILURE);
-	while (s1[i] != '\0' && s2[i] != '\0' && s1[i] == s2[i])
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		result = result * 10 + (str[i] - 48);
+		if (result != (result * 10 + (str[i] - 48)) / 10 && sign == -1)
+			return (FAILURE);
+		if (result != (result * 10 + (str[i] - 48)) / 10 && sign == 1)
+			return (FAILURE);
 		i++;
-	return (s1[i] - s2[i]);
+	}
+	return ((int)(result * sign));
 }
 
 void	ft_bzero(void *s, size_t n)

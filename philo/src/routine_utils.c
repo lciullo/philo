@@ -1,16 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_time.c                                         :+:      :+:    :+:   */
+/*   routine_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/27 12:00:09 by lciullo           #+#    #+#             */
-/*   Updated: 2023/07/31 15:07:51 by lciullo          ###   ########.fr       */
+/*   Created: 2023/08/01 17:39:40 by lciullo           #+#    #+#             */
+/*   Updated: 2023/08/01 17:50:47 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	display_routine(t_single *philo, int action)
+{
+	long	current_time;
+
+	current_time = 0;
+	current_time = get_time(&philo->shared->time_start_prog);
+	if (EAT == action)
+		printf("%ld %d is eating\n", current_time, philo->id);
+	else if (THINK == action)
+		printf("%ld %d is thinking\n", current_time, philo->id);
+	else if (FORK == action)
+		printf("%ld %d has taken a fork\n", current_time, philo->id);
+	else if (SLEEP == action)
+		printf("%ld %d is sleeping\n", current_time, philo->id);
+	return (SUCCESS);
+}
 
 long	get_time(struct timeval *time_start_prog)
 {

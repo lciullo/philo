@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:40:00 by lciullo           #+#    #+#             */
-/*   Updated: 2023/08/01 10:22:35 by lisa             ###   ########.fr       */
+/*   Updated: 2023/08/01 17:52:12 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,11 @@ enum {
 	TRUE = 1,
 	FALSE = 0,
 	AVAILABLE = 3,
-	UNAVAILABLE = 4
+	UNAVAILABLE = 4,
+	THINK = -2,
+	FORK = -3,
+	EAT = -4,
+	SLEEP = -5
 };
 
 typedef struct s_arg {
@@ -71,7 +75,6 @@ typedef struct s_single {
 int		ft_isdigit(int c);
 int		ft_atoi(const char *str);
 size_t	ft_strlen(const char *str);
-int		ft_strcmp(char *s1, char *s2);
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t nb_elements, size_t size);
 
@@ -84,7 +87,7 @@ int		loop_to_init_each_philo(t_arg *shared);
 int		loop_struct(t_arg *shared);
 long	get_time(struct timeval *time_start_prog);
 void	routine(t_single *philo);
-int		display_routine(t_single *philo, char *action);
+int		display_routine(t_single *philo, int action);
 int		take_fork(t_single *philo);
 int		put_down_fork(t_single *philo);
 #endif
