@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fill_struct_of_philo.c                             :+:      :+:    :+:   */
+/*   fill_struct.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 09:45:57 by lciullo           #+#    #+#             */
-/*   Updated: 2023/07/31 11:23:47 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/08/01 10:04:05 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,21 @@ int	init_shared_struct(t_arg *shared)
 	shared->time_to_eat = 0;
 	shared->time_to_sleep = 0;
 	shared->nb_meals = -1;
-	shared->is_end = FALSE;
+	shared->is_end_unlock = FALSE;
 	shared->enough_eat = FALSE;
 	if (pthread_mutex_init(&(shared->launcher), NULL) == FAILURE)
 	{
 		perror("Init mutex launcher failed");
 		return (FAILURE);
 	}
-	if (pthread_mutex_init(&(shared->gossiper), NULL) == FAILURE)
+	if (pthread_mutex_init(&(shared->speaker), NULL) == FAILURE)
 	{
-		perror("Init mutex gossiper failed");
+		perror("Init mutex speaker failed");
 		return (FAILURE);
 	}
-	if (pthread_mutex_init(&(shared->controller), NULL) == FAILURE)
+	if (pthread_mutex_init(&(shared->watcher), NULL) == FAILURE)
 	{
-		perror("Init mutex controller failed");
+		perror("Init mutex watcherfailed");
 		return (FAILURE);
 	}
 	return (SUCCESS);

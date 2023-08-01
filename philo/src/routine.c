@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 12:00:19 by lciullo           #+#    #+#             */
-/*   Updated: 2023/07/31 15:57:18 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/08/01 10:28:50 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,27 +28,11 @@ void	routine(t_single *philo)
 	current_time = get_time(&philo->shared->time_start_prog);
 	pthread_mutex_lock(&(philo->shared->launcher));
 	pthread_mutex_unlock(&(philo->shared->launcher));
-	display_routine(philo, "THINK");
-	take_fork(philo);
+	
+	
 	eating(philo);
 	put_down_fork(philo);
 	sleeping(philo);
-}
-
-static	int	take_fork(t_single *philo)
-{
-	if (philo->right_fork == AVAILABLE)
-	{
-		philo->right_fork = UNAVAILABLE;
-		philo->nb_fork++;
-	}
-	if (*(philo->left_fork) == AVAILABLE)
-	{
-		*(philo->left_fork) = UNAVAILABLE;
-		philo->nb_fork++;
-	}
-	display_routine(philo, "FORK");
-	return (SUCCESS);
 }
 
 static	int	eating(t_single *philo)
@@ -57,7 +41,8 @@ static	int	eating(t_single *philo)
 	int	time;
 
 	time = 0;
-	display_routine(philo, "EAT");
+	display_routine(philo, "THINK");
+	take_fork(philo);
 	if (philo->right_fork == UNAVAILABLE && \
 		*(philo->left_fork) == UNAVAILABLE && philo->nb_fork == 2)
 	{
@@ -67,21 +52,6 @@ static	int	eating(t_single *philo)
 			return (FAILURE);
 		while (time < philo->time_end_meal)
 			time = get_time(&(philo->shared->time_start_prog));
-	}
-	return (SUCCESS);
-}
-
-static	int	put_down_fork(t_single *philo)
-{
-	if (philo->right_fork == UNAVAILABLE)
-	{
-		philo->right_fork = AVAILABLE;
-		philo->nb_fork--;
-	}
-	if (*(philo->left_fork) == UNAVAILABLE)
-	{
-		*(philo->left_fork) = AVAILABLE;
-		philo->nb_fork--;
 	}
 	return (SUCCESS);
 }

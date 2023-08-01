@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:40:00 by lciullo           #+#    #+#             */
-/*   Updated: 2023/07/31 15:43:35 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/08/01 10:22:35 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ typedef struct s_arg {
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				nb_meals;
-	int				is_end;
+	int				is_end_unlock;
 	int				enough_eat;
 	struct timeval	time_start_prog;
 	pthread_mutex_t	launcher; //lance tous les philos en même temps
-	pthread_mutex_t	gossiper; //il annonce logs nouvelles gossiper
-	pthread_mutex_t	controller; // il check les infos 
+	pthread_mutex_t	speaker; //il annonce logs nouvelles speaker
+	pthread_mutex_t	watcher; // il check les infos 
 	t_single		*philo;
 }	t_arg;
 
@@ -85,4 +85,6 @@ int		loop_struct(t_arg *shared);
 long	get_time(struct timeval *time_start_prog);
 void	routine(t_single *philo);
 int		display_routine(t_single *philo, char *action);
+int		take_fork(t_single *philo);
+int		put_down_fork(t_single *philo);
 #endif
