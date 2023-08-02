@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:40:00 by lciullo           #+#    #+#             */
-/*   Updated: 2023/08/01 19:26:54 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/08/02 16:18:23 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ typedef struct s_arg {
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				nb_meals;
-	int				is_end_unlock;
 	int				enough_eat;
+	int				is_end;
 	struct timeval	time_start_prog;
 	pthread_mutex_t	launcher;
 	pthread_mutex_t	speaker;
@@ -88,6 +88,9 @@ int		loop_struct(t_arg *shared);
 long	get_time(struct timeval *time_start_prog);
 void	routine(t_single *philo);
 int		display_routine(t_single *philo, int action);
+void	check_death(t_single *philo);
+int		eating(t_single *philo);
 int		take_fork(t_single *philo);
+int		enough_eat(t_single *philo);
 int		put_down_fork(t_single *philo);
 #endif

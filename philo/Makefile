@@ -6,7 +6,7 @@
 #    By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/20 13:49:00 by lciullo           #+#    #+#              #
-#    Updated: 2023/08/01 17:54:02 by lciullo          ###   ########.fr        #
+#    Updated: 2023/08/02 09:56:47 by lciullo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ HEAD 			=	head/philo.h
 SRC 			= 	philo.c \
 					src/core_of_prog.c \
 					src/fill_struct.c \
-					src/fork.c \
+					src/eat.c \
 					src/libft_utils.c \
 					src/parsing.c \
 					src/routine_utils.c \

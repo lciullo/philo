@@ -22,7 +22,7 @@ int	init_shared_struct(t_arg *shared)
 	shared->time_to_eat = 0;
 	shared->time_to_sleep = 0;
 	shared->nb_meals = -1;
-	shared->is_end_unlock = FALSE;
+	shared->is_end = FALSE;
 	shared->enough_eat = FALSE;
 	if (pthread_mutex_init(&(shared->launcher), NULL) == FAILURE)
 	{
@@ -84,8 +84,9 @@ static int	fill_each_philo(t_single *philo, t_single *last, \
 	if (last != NULL)
 	{
 		philo->left_fork = &(last->right_fork);
-		philo->m_left_fork = &(philo->m_right_fork);
+		philo->m_left_fork = &(last->m_right_fork);
 	}
+	
 	philo->time_start_meal = 0;
 	philo->time_end_meal = 0;
 	philo->time_start_sleep = 0;
