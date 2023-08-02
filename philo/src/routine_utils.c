@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 17:39:40 by lciullo           #+#    #+#             */
-/*   Updated: 2023/08/02 17:05:15 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/08/02 18:52:25 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,13 @@ int	display_routine(t_single *philo, int action)
 	pthread_mutex_lock(&(philo->shared->watcher));
 	if (philo->shared->is_end == TRUE)
 	{
-		printf("%0.6ld %d is dead\n", current_time, philo->id);
 		pthread_mutex_unlock(&(philo->shared->watcher));
 		return (SUCCESS);
 	}
 	pthread_mutex_unlock(&(philo->shared->watcher));
-	check_death(philo);
-	pthread_mutex_lock(&(philo->shared->speaker));
-	if (philo->is_dead == TRUE)
-	{
-		printf("%0.6ld %d is dead\n", current_time, philo->id);
+	if (check_death(philo) == FAILURE)
 		return (FAILURE);
-	}
-	check_death(philo);
+	pthread_mutex_lock(&(philo->shared->speaker));
 	if (EAT == action)
 		printf("%0.6ld %d is eating\n", current_time, philo->id);
 	else if (THINK == action)
@@ -46,6 +40,8 @@ int	display_routine(t_single *philo, int action)
 	return (SUCCESS);
 }
 
+/*Pour optimiser faire une copie dans chaque philo*/
+
 long	get_time(struct timeval *time_start_prog)
 {
 	struct timeval		current_time;
@@ -53,9 +49,11 @@ long	get_time(struct timeval *time_start_prog)
 	long				microsec_res;
 	long				result; 
 
+	//pthread_mutex_lock(&(philo->shared->watcher));
 	gettimeofday(&current_time, NULL);
 	second_res = current_time.tv_sec - time_start_prog->tv_sec;
 	microsec_res = current_time.tv_usec - time_start_prog->tv_usec;
+	//pthread_mutex_unlock(&(philo->shared->watcher));
 	second_res = second_res * 1000;
 	microsec_res = microsec_res / 1000;
 	result = second_res + microsec_res;

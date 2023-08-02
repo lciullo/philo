@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 09:56:29 by lciullo           #+#    #+#             */
-/*   Updated: 2023/08/02 17:11:12 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/08/02 18:42:52 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,9 @@ int	eating(t_single *philo)
 		pthread_mutex_unlock(&(philo->shared->watcher));
 		while (time < philo->time_end_meal)
 		{
+			if (check_death(philo) == FAILURE)
+				return (FAILURE);
 			time = get_time(&(philo->shared->time_start_prog));
-			check_death(philo);
 		}
 	}
 	return (SUCCESS);
@@ -59,12 +60,14 @@ int	take_fork(t_single *philo)
 	pthread_mutex_unlock(philo->m_left_fork);
 	if (philo->nb_fork == 2)
 	{
-		check_death(philo);
+		if (check_death(philo) == FAILURE)
+			return (FAILURE);
 		display_routine(philo, FORK);
 		display_routine(philo, FORK);
 		return (SUCCESS);
 	}
-	check_death(philo);
+	if (check_death(philo) == FAILURE)
+		return (FAILURE);
 	return (FAILURE);
 }
 
@@ -77,5 +80,7 @@ int	put_down_fork(t_single *philo)
 	*(philo->left_fork) = AVAILABLE;
 	philo->nb_fork = 0;
 	pthread_mutex_unlock(philo->m_left_fork);
+	if (check_death(philo) == FAILURE)
+		return (FAILURE);
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 10:31:38 by lciullo           #+#    #+#             */
-/*   Updated: 2023/08/02 16:21:22 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/08/02 18:48:44 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,28 +37,32 @@ int	loop_struct(t_arg *shared)
 	return (SUCCESS);
 }
 
-void	check_death(t_single *philo)
+int	check_death(t_single *philo)
 {
-	int	current_time;
-	int	last_meal;
+	long	current_time;
+	int		last_meal;
 
 	pthread_mutex_lock(&(philo->shared->watcher));
 	if (philo->shared->is_end == TRUE)
 	{
 		pthread_mutex_unlock(&(philo->shared->watcher));
-		return ;
+		return (FAILURE);
 	}
 	pthread_mutex_unlock(&(philo->shared->watcher));
 	current_time = get_time(&(philo->shared->time_start_prog));
-	last_meal = current_time - philo->time_end_meal;
+	last_meal = current_time - philo->time_start_meal;
 	if (last_meal > philo->shared->time_to_die)
 	{
 		philo->is_dead = TRUE;
+		pthread_mutex_lock(&(philo->shared->speaker));
+		printf("%0.6ld %d is dead\n", current_time, philo->id);
+		pthread_mutex_unlock(&(philo->shared->speaker));
 		pthread_mutex_lock(&(philo->shared->watcher));
 		philo->shared->is_end = TRUE;
 		pthread_mutex_unlock(&(philo->shared->watcher));
-
+		return (FAILURE);
 	}
+	return (SUCCESS);
 }
 
 static void	join_philo(t_arg *shared)

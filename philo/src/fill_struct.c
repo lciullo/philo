@@ -86,7 +86,6 @@ static int	fill_each_philo(t_single *philo, t_single *last, \
 		philo->left_fork = &(last->right_fork);
 		philo->m_left_fork = &(last->m_right_fork);
 	}
-	
 	philo->time_start_meal = 0;
 	philo->time_end_meal = 0;
 	philo->time_start_sleep = 0;
