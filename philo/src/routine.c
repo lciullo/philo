@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 12:00:19 by lciullo           #+#    #+#             */
-/*   Updated: 2023/08/02 19:00:56 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/08/03 09:05:57 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	routine(t_single *philo)
 {
 	long	current_time;
 
-	current_time = get_time(&philo->shared->time_start_prog, philo);
+	current_time = get_time();
 	pthread_mutex_lock(&(philo->shared->launcher));
 	pthread_mutex_unlock(&(philo->shared->launcher));
 	while (philo->is_dead == FALSE)
@@ -53,14 +53,14 @@ static	int	sleeping(t_single *philo)
 	int	time;
 
 	time = 0;
-	philo->time_start_sleep = get_time(&(philo->shared->time_start_prog), philo);
+	philo->time_start_sleep = get_time();
 	display_routine(philo, SLEEP);
 	philo->time_end_sleep = philo->time_start_sleep  + philo->shared->time_to_sleep;
 	if (philo->is_dead == TRUE)
 		return (FAILURE);
 	while (time < philo->time_end_sleep)
 	{
-		time = get_time(&(philo->shared->time_start_prog), philo);
+		time = get_time();
 		if (check_death(philo) == FAILURE)
 			return (FAILURE);
 	}

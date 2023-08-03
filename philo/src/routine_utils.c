@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 17:39:40 by lciullo           #+#    #+#             */
-/*   Updated: 2023/08/02 19:06:38 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/08/03 09:05:51 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	display_routine(t_single *philo, int action)
 	long	current_time;
 
 	current_time = 0;
-	current_time = get_time(&philo->shared->time_start_prog, philo);
+	current_time = get_time();
 	pthread_mutex_lock(&(philo->shared->watcher));
 	if (philo->shared->is_end == TRUE)
 	{
@@ -42,20 +42,11 @@ int	display_routine(t_single *philo, int action)
 
 /*Pour optimiser faire une copie dans chaque philo*/
 
-long	get_time(struct timeval *time_start_prog, t_single *philo)
+long	get_time(void)
 {
-	struct timeval		current_time;
-	long				second_res;
-	long				microsec_res;
-	long				result; 
+	struct timeval		time;
 
-	pthread_mutex_lock(&(philo->shared->watcher));
-	gettimeofday(&current_time, NULL);
-	second_res = current_time.tv_sec - time_start_prog->tv_sec;
-	microsec_res = current_time.tv_usec - time_start_prog->tv_usec;
-	pthread_mutex_unlock(&(philo->shared->watcher));
-	second_res = second_res * 1000;
-	microsec_res = microsec_res / 1000;
-	result = second_res + microsec_res;
-	return (result);
+	if (gettimeofday(&time, NULL) == -1)
+		return (printf("Error : Couldn't get time\n"), -1);
+	return (((time.tv_sec % 1000) * 1000) + (time.tv_usec / 1000));
 }

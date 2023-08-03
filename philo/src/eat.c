@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 09:56:29 by lciullo           #+#    #+#             */
-/*   Updated: 2023/08/02 19:08:19 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/08/03 09:05:44 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	eating(t_single *philo)
 	if (philo->right_fork == UNAVAILABLE && \
 		*(philo->left_fork) == UNAVAILABLE && philo->nb_fork == 2)
 	{
-		philo->time_start_meal = get_time(&philo->shared->time_start_prog, philo);
+		philo->time_start_meal = get_time();
 		display_routine(philo, EAT);
 		pthread_mutex_lock(&(philo->shared->watcher));
 		philo->time_end_meal = philo->time_start_meal + philo->shared->time_to_eat;
@@ -36,7 +36,7 @@ int	eating(t_single *philo)
 		{
 			if (check_death(philo) == FAILURE)
 				return (FAILURE);
-			time = get_time(&philo->shared->time_start_prog, philo);
+			time = get_time();
 		}
 	}
 	return (SUCCESS);

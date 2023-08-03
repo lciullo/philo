@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 10:31:38 by lciullo           #+#    #+#             */
-/*   Updated: 2023/08/02 19:01:20 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/08/03 09:27:28 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ int	loop_struct(t_arg *shared)
 		}
 		i++;
 	}
+	shared->t_start = get_time();
 	pthread_mutex_unlock(&(shared->launcher));
-	gettimeofday(&shared->time_start_prog, NULL);
 	join_philo(shared);
 	return (SUCCESS);
 }
@@ -49,7 +49,7 @@ int	check_death(t_single *philo)
 		return (FAILURE);
 	}
 	pthread_mutex_unlock(&(philo->shared->watcher));
-	current_time = get_time(&(philo->shared->time_start_prog), philo);
+	current_time = get_time();
 	last_meal = current_time - philo->time_start_meal;
 	if (last_meal > philo->shared->time_to_die)
 	{

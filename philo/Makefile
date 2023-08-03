@@ -6,7 +6,7 @@
 #    By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/20 13:49:00 by lciullo           #+#    #+#              #
-#    Updated: 2023/08/02 09:56:47 by lciullo          ###   ########.fr        #
+#    Updated: 2023/08/03 08:55:39 by lciullo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,7 @@ RMF				=	rm -rf
 
 CC 				= cc
 
-CFLAGS 			= -Wall  -Wextra -Werror -I ${DIR_HEAD} 
+CFLAGS 			= -Wall  -Wextra -Werror -g3 -I ${DIR_HEAD} 
 
 # ---- Debug Compilation flags ---- #
 
