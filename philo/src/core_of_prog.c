@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 10:31:38 by lciullo           #+#    #+#             */
-/*   Updated: 2023/08/03 09:27:28 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/08/03 09:55:42 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	loop_struct(t_arg *shared)
 		i++;
 	}
 	shared->t_start = get_time();
+	printf("t_start of prog %ld\n", shared->t_start);
 	pthread_mutex_unlock(&(shared->launcher));
 	join_philo(shared);
 	return (SUCCESS);
@@ -49,7 +50,9 @@ int	check_death(t_single *philo)
 		return (FAILURE);
 	}
 	pthread_mutex_unlock(&(philo->shared->watcher));
-	current_time = get_time();
+	pthread_mutex_lock(&(philo->shared->watcher));
+	current_time = get_time() + philo->shared->t_start;
+	pthread_mutex_unlock(&(philo->shared->watcher));
 	last_meal = current_time - philo->time_start_meal;
 	if (last_meal > philo->shared->time_to_die)
 	{
