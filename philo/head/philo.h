@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:40:00 by lciullo           #+#    #+#             */
-/*   Updated: 2023/08/02 18:58:10 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/08/03 15:32:57 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_arg {
 	int				nb_meals;
 	int				enough_eat;
 	int				is_end;
-	struct timeval	time_start_prog;
+	struct timeval	t_start;
 	pthread_mutex_t	launcher;
 	pthread_mutex_t	speaker;
 	pthread_mutex_t	watcher;
@@ -58,11 +58,11 @@ typedef struct s_single {
 	pthread_mutex_t	m_right_fork;
 	int				*left_fork;
 	int				right_fork;
-	int				time_start_meal;
-	int				time_end_meal;
-	int				time_start_sleep;
-	int				time_end_sleep;
-	int				nb_meals_eaten;
+	int				start_meal;
+	int				end_meal;
+	int				start_sleep;
+	int				end_sleep;
+	int				eaten;
 	long int		lifespan;
 	int				is_dead;
 	int				nb_fork;
@@ -85,7 +85,7 @@ int		parsing_input(t_arg *shared, int ac, char **av);
 int		allocated_struct_of_philo(t_arg *shared);
 int		loop_to_init_each_philo(t_arg *shared);
 int		loop_struct(t_arg *shared);
-long	get_time(struct timeval *time_start_prog, t_single *philo);
+long	get_time(struct timeval *t_start, t_single *philo);
 void	routine(t_single *philo);
 int		display_routine(t_single *philo, int action);
 int		check_death(t_single *philo);
