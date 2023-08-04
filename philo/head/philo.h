@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:40:00 by lciullo           #+#    #+#             */
-/*   Updated: 2023/08/03 15:32:57 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/08/04 19:42:30 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_arg {
 	pthread_mutex_t	launcher;
 	pthread_mutex_t	speaker;
 	pthread_mutex_t	watcher;
+	pthread_mutex_t	display;
 	t_single		*philo;
 }	t_arg;
 
@@ -63,9 +64,9 @@ typedef struct s_single {
 	int				start_sleep;
 	int				end_sleep;
 	int				eaten;
-	long int		lifespan;
 	int				is_dead;
 	int				nb_fork;
+	long int		time_to_eat_copy;
 	struct timeval	current_time;
 	t_arg			*shared;
 }	t_single;
@@ -88,9 +89,12 @@ int		loop_struct(t_arg *shared);
 long	get_time(struct timeval *t_start, t_single *philo);
 void	routine(t_single *philo);
 int		display_routine(t_single *philo, int action);
-int		check_death(t_single *philo);
+int		is_dead(t_single *philo);
+int		is_end(t_single *philo);
 int		eating(t_single *philo);
 int		take_fork(t_single *philo);
 int		enough_eat(t_single *philo);
 int		put_down_fork(t_single *philo);
+int		destroy_philo(t_arg *shared);
+
 #endif

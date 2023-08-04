@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 12:00:19 by lciullo           #+#    #+#             */
-/*   Updated: 2023/08/03 15:11:01 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/08/04 19:23:19 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,10 @@ void	routine(t_single *philo)
 		pthread_mutex_unlock(&(philo->shared->watcher));
 		if (display_routine(philo, THINK) == FAILURE)
 			return ;
-		eating(philo);
-		sleeping(philo);
+		if (eating(philo) != SUCCESS)
+			return ;
+		if (sleeping(philo) != SUCCESS)
+			return ;
 	}
 	return ;
 }
@@ -51,8 +53,9 @@ static	int	sleeping(t_single *philo)
 	while (time < philo->end_sleep)
 	{
 		time = get_time(&(philo->shared->t_start), philo);
-		if (check_death(philo) == FAILURE)
+		if (is_dead(philo) == FAILURE)
 			return (FAILURE);
+		usleep(philo->shared->nb_philo * 10);
 	}
 	return (SUCCESS);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   core_of_prog.c                                     :+:      :+:    :+:   */
+/*   loop_philo.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 10:31:38 by lciullo           #+#    #+#             */
-/*   Updated: 2023/08/03 16:20:11 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/08/04 16:40:48 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,32 +36,22 @@ int	loop_struct(t_arg *shared)
 	return (SUCCESS);
 }
 
-int	check_death(t_single *philo)
+int	destroy_philo(t_arg *shared)
 {
-	long	current_time;
-	int		last_meal;
+	int	i;
 
-	pthread_mutex_lock(&(philo->shared->watcher));
-	if (philo->shared->is_end == TRUE)
+	i = 0;
+	pthread_mutex_destroy(&(shared->launcher));
+	pthread_mutex_destroy(&(shared->watcher));
+	pthread_mutex_destroy(&(shared->speaker));
+	while (i < shared->nb_philo - 1)
 	{
-		pthread_mutex_unlock(&(philo->shared->watcher));
-		return (FAILURE);
-	}
-	pthread_mutex_unlock(&(philo->shared->watcher));
-	current_time = get_time(&(philo->shared->t_start), philo);
-	pthread_mutex_lock(&(philo->shared->watcher));
-	last_meal = current_time - philo->start_meal;
-	pthread_mutex_unlock(&(philo->shared->watcher));
-	if (last_meal > philo->shared->time_to_die)
-	{
-		philo->is_dead = TRUE;
-		pthread_mutex_lock(&(philo->shared->speaker));
-		printf("%0.6ld %d died\n", current_time, philo->id);
-		pthread_mutex_unlock(&(philo->shared->speaker));
-		pthread_mutex_lock(&(philo->shared->watcher));
-		philo->shared->is_end = TRUE;
-		pthread_mutex_unlock(&(philo->shared->watcher));
-		return (FAILURE);
+		if (pthread_mutex_destroy(&(shared->philo[i].m_right_fork)) != 0)
+		{
+			printf("pthread_mutext_destroy: error\n");
+			return (FAILURE);
+		}
+		i++;
 	}
 	return (SUCCESS);
 }

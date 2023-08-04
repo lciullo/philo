@@ -36,7 +36,12 @@ int	init_shared_struct(t_arg *shared)
 	}
 	if (pthread_mutex_init(&(shared->watcher), NULL) == FAILURE)
 	{
-		perror("Init mutex watcherfailed");
+		perror("Init mutex watcher failed");
+		return (FAILURE);
+	}
+	if (pthread_mutex_init(&(shared->display), NULL) == FAILURE)
+	{
+		perror("Init mutex display failed");
 		return (FAILURE);
 	}
 	return (SUCCESS);
@@ -86,12 +91,12 @@ static int	fill_each_philo(t_single *philo, t_single *last, \
 		philo->left_fork = &(last->right_fork);
 		philo->m_left_fork = &(last->m_right_fork);
 	}
+	philo->time_to_eat_copy = shared->time_to_eat;
 	philo->start_meal = 0;
 	philo->end_meal = 0;
 	philo->start_sleep = 0;
 	philo->end_sleep = 0;
 	philo->eaten = 0;
-	philo->lifespan = shared->time_to_die;
 	philo->is_dead = FALSE;
 	philo->nb_fork = 0;
 	philo->eaten = 0;
