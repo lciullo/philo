@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:40:00 by lciullo           #+#    #+#             */
-/*   Updated: 2023/08/05 16:14:25 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/08/05 18:24:06 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ long	get_time(struct timeval *t_start, t_single *philo);
 void	routine(t_single *philo);
 void	display_routine(t_single *philo, int action);
 int		is_dead(t_single *philo);
-int		is_end(t_single *philo);
 int		eating(t_single *philo);
 int		take_fork(t_single *philo);
 int		enough_eat(t_single *philo);

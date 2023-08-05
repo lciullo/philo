@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 10:31:38 by lciullo           #+#    #+#             */
-/*   Updated: 2023/08/05 16:17:14 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/08/05 18:11:56 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	loop_struct(t_arg *shared)
 		if (pthread_create(&(shared->philo[i].thread_id), \
 				NULL, (void *)routine, &(shared->philo[i])) != 0)
 		{
-			perror("Failed to create thread");
+			printf("Failed to create thread");
 			return (FAILURE);
 		}
 		i++;
