@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   routine_utils.c                                    :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 17:39:40 by lciullo           #+#    #+#             */
-/*   Updated: 2023/08/04 19:49:14 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/08/05 16:14:10 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-/*creer un autre mutex que pour cette fonction*/
-
-int	display_routine(t_single *philo, int action)
+void	display_routine(t_single *philo, int action)
 {
 	long	current_time;
 
 	current_time = 0;
-	if (is_end(philo) == FAILURE)
-		return (FAILURE);
-	if (is_dead(philo) == FAILURE)
-		return (FAILURE);
-	pthread_mutex_lock(&(philo->shared->display));
+	pthread_mutex_lock(&(philo->shared->speaker));
 	current_time = get_time(&philo->shared->t_start, philo);
-	if (philo->is_dead == FALSE)
+	pthread_mutex_lock(&(philo->shared->watcher));
+	if (philo->is_dead == FALSE && philo->shared->is_end == FALSE)
 	{
+		pthread_mutex_unlock(&(philo->shared->watcher));
 		if (EAT == action)
 			printf("%0.6ld %d is eating\n", current_time, philo->id);
 		else if (THINK == action)
@@ -36,8 +32,9 @@ int	display_routine(t_single *philo, int action)
 		else if (SLEEP == action)
 			printf("%0.6ld %d is sleeping\n", current_time, philo->id);
 	}
-	pthread_mutex_unlock(&(philo->shared->display));
-	return (SUCCESS);
+	else
+		pthread_mutex_unlock(&(philo->shared->watcher));
+	pthread_mutex_unlock(&(philo->shared->speaker));
 }
 
 long	get_time(struct timeval *t_start, t_single *philo)
@@ -56,4 +53,28 @@ long	get_time(struct timeval *t_start, t_single *philo)
 	microsec_res = microsec_res / 1000;
 	result = second_res + microsec_res;
 	return (result);
+}
+
+void	clear_mutex(t_arg *shared)
+{
+	pthread_mutex_destroy(&(shared->launcher));
+	pthread_mutex_destroy(&(shared->watcher));
+	pthread_mutex_destroy(&(shared->speaker));
+}
+
+void	clear_fill_each_philo(t_arg *shared, int nb_allocation)
+{
+	int	i;
+
+	i = 0;
+	printf("Init mutex right fork failed\n");
+	pthread_mutex_destroy(&(shared->launcher));
+	pthread_mutex_destroy(&(shared->watcher));
+	pthread_mutex_destroy(&(shared->speaker));
+	while (i < nb_allocation)
+	{
+		pthread_mutex_destroy(&(shared->philo[i].m_right_fork));
+		i++;
+	}
+	free(shared->philo);
 }

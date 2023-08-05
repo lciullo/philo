@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 09:56:29 by lciullo           #+#    #+#             */
-/*   Updated: 2023/08/04 19:25:20 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/08/05 14:22:44 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ int	eating(t_single *philo)
 		if (is_dead(philo) == FAILURE)
 			return (FAILURE);
 	}
-	if (philo->right_fork == UNAVAILABLE && \
-		*(philo->left_fork) == UNAVAILABLE && philo->nb_fork == 2)
+	if (philo->nb_fork == 2)
 	{
 		if (is_meal_time(philo) == FAILURE)
 			return (FAILURE);
@@ -38,16 +37,16 @@ int	take_fork(t_single *philo)
 	if (philo->right_fork == AVAILABLE)
 	{
 		philo->right_fork = UNAVAILABLE;
-		display_routine(philo, FORK);
 		philo->nb_fork++;
+		display_routine(philo, FORK);
 	}
 	pthread_mutex_unlock(&(philo->m_right_fork));
 	pthread_mutex_lock(philo->m_left_fork);
 	if (*(philo->left_fork) == AVAILABLE)
 	{
 		*(philo->left_fork) = UNAVAILABLE;
-		display_routine(philo, FORK);
 		philo->nb_fork++;
+		display_routine(philo, FORK);
 	}
 	pthread_mutex_unlock(philo->m_left_fork);
 	if (philo->nb_fork == 2)
@@ -56,8 +55,6 @@ int	take_fork(t_single *philo)
 			return (FAILURE);
 		return (SUCCESS);
 	}
-	if (is_dead(philo) == FAILURE)
-		return (FAILURE);
 	return (FAILURE);
 }
 
@@ -70,7 +67,6 @@ static	int	is_meal_time(t_single *philo)
 	display_routine(philo, EAT);
 	pthread_mutex_lock(&(philo->shared->watcher));
 	philo->end_meal = philo->start_meal + philo->shared->time_to_eat;
-	//printf("philo %d end meal %d\n", philo->id, philo->end_meal);
 	if (philo->is_dead == TRUE)
 	{
 		pthread_mutex_unlock(&(philo->shared->watcher));

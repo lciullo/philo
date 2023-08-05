@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:58:58 by lciullo           #+#    #+#             */
-/*   Updated: 2023/08/01 17:52:21 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/08/05 16:11:38 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ft_atoi(const char *str)
 {
 	int			i;
 	size_t		len;
-	long		result;
+	long int	result;
 	int			sign;
 
 	i = 0;

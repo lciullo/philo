@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:40:00 by lciullo           #+#    #+#             */
-/*   Updated: 2023/08/04 19:42:30 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/08/05 16:14:25 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ typedef struct s_arg {
 	pthread_mutex_t	launcher;
 	pthread_mutex_t	speaker;
 	pthread_mutex_t	watcher;
-	pthread_mutex_t	display;
 	t_single		*philo;
 }	t_arg;
 
@@ -73,11 +72,11 @@ typedef struct s_single {
 
 //=== Libft utils === //
 
-int		ft_isdigit(int c);
 int		ft_atoi(const char *str);
-size_t	ft_strlen(const char *str);
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t nb_elements, size_t size);
+int		ft_isdigit(int c);
+size_t	ft_strlen(const char *str);
 
 //=== Philo === //
 
@@ -88,7 +87,7 @@ int		loop_to_init_each_philo(t_arg *shared);
 int		loop_struct(t_arg *shared);
 long	get_time(struct timeval *t_start, t_single *philo);
 void	routine(t_single *philo);
-int		display_routine(t_single *philo, int action);
+void	display_routine(t_single *philo, int action);
 int		is_dead(t_single *philo);
 int		is_end(t_single *philo);
 int		eating(t_single *philo);
@@ -96,5 +95,7 @@ int		take_fork(t_single *philo);
 int		enough_eat(t_single *philo);
 int		put_down_fork(t_single *philo);
 int		destroy_philo(t_arg *shared);
+void	clear_mutex(t_arg *shared);
+void	clear_fill_each_philo(t_arg *shared, int nb_allocation);
 
 #endif

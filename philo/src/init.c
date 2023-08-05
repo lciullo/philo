@@ -14,6 +14,7 @@
 
 static int	fill_each_philo(t_single *philo, t_single *last, \
 				t_arg *shared, int i);
+static int	init_mutex(t_arg *shared);
 
 int	init_shared_struct(t_arg *shared)
 {
@@ -24,24 +25,29 @@ int	init_shared_struct(t_arg *shared)
 	shared->nb_meals = -1;
 	shared->is_end = FALSE;
 	shared->enough_eat = FALSE;
+	if (init_mutex(shared) == FAILURE)
+		return (FAILURE);
+	return (SUCCESS);
+}
+
+static	int	init_mutex(t_arg *shared)
+{
 	if (pthread_mutex_init(&(shared->launcher), NULL) == FAILURE)
 	{
-		perror("Init mutex launcher failed");
+		printf("Init mutex launcher failed");
 		return (FAILURE);
 	}
 	if (pthread_mutex_init(&(shared->speaker), NULL) == FAILURE)
 	{
-		perror("Init mutex speaker failed");
+		pthread_mutex_destroy(&(shared->launcher));
+		printf("Init mutex speaker failed");
 		return (FAILURE);
 	}
 	if (pthread_mutex_init(&(shared->watcher), NULL) == FAILURE)
 	{
-		perror("Init mutex watcher failed");
-		return (FAILURE);
-	}
-	if (pthread_mutex_init(&(shared->display), NULL) == FAILURE)
-	{
-		perror("Init mutex display failed");
+		pthread_mutex_destroy(&(shared->launcher));
+		pthread_mutex_destroy(&(shared->watcher));
+		printf("Init mutex watcher failed");
 		return (FAILURE);
 	}
 	return (SUCCESS);
@@ -53,9 +59,11 @@ int	allocated_struct_of_philo(t_arg *shared)
 	if (!shared->philo)
 	{
 		printf("Malloc failed ft_calloc\n");
+		clear_mutex(shared);
 		return (FAILURE);
 	}
-	loop_to_init_each_philo(shared);
+	if (loop_to_init_each_philo(shared) == FAILURE)
+		return (FAILURE);
 	return (SUCCESS);
 }
 
@@ -68,10 +76,16 @@ int	loop_to_init_each_philo(t_arg *shared)
 	while (i < shared->nb_philo)
 	{
 		if (i == 0)
-			fill_each_philo(&shared->philo[i], NULL, shared, i);
+		{
+			if (fill_each_philo(&shared->philo[i], NULL, shared, i) == FAILURE)
+				return (FAILURE);
+		}
 		else
-			fill_each_philo(&shared->philo[i], \
-					&shared->philo[i - 1], shared, i);
+		{
+			if (fill_each_philo(&shared->philo[i], 
+					&shared->philo[i - 1], shared, i) == FAILURE)
+				return (FAILURE);
+		}
 		i++;
 	}
 	shared->philo[0].left_fork = &(shared->philo[i - 1].right_fork);
@@ -85,7 +99,7 @@ static int	fill_each_philo(t_single *philo, t_single *last, \
 	philo->id = i + 1;
 	philo->right_fork = AVAILABLE;
 	if (pthread_mutex_init(&(philo->m_right_fork), NULL) == FAILURE)
-		return (FAILURE);
+		clear_fill_each_philo(shared, i);
 	if (last != NULL)
 	{
 		philo->left_fork = &(last->right_fork);

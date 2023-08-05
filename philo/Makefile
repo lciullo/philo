@@ -6,7 +6,7 @@
 #    By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/20 13:49:00 by lciullo           #+#    #+#              #
-#    Updated: 2023/08/04 15:45:09 by lciullo          ###   ########.fr        #
+#    Updated: 2023/08/05 15:46:11 by lciullo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,14 +19,14 @@ NAME 			=	philo
 HEAD 			=	head/philo.h
 
 SRC 			= 	philo.c \
-					src/loop_philo.c \
-					src/init.c \
 					src/eat.c \
+					src/init.c \
 					src/is_end.c \
 					src/libft_utils.c \
+					src/loop_philo.c \
 					src/parsing.c \
-					src/routine_utils.c \
-					src/routine.c
+					src/routine.c \
+					src/utils.c 
 
 # ---- Directories ---- #
 

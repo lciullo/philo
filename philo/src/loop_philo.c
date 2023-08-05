@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 10:31:38 by lciullo           #+#    #+#             */
-/*   Updated: 2023/08/04 16:40:48 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/08/05 16:17:14 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,19 @@ int	loop_struct(t_arg *shared)
 	return (SUCCESS);
 }
 
+static void	join_philo(t_arg *shared)
+{
+	int	i;
+
+	i = 0;
+	while (i < shared->nb_philo)
+	{
+		pthread_join(shared->philo[i].thread_id, NULL);
+		i++;
+	}
+	return ;
+}
+
 int	destroy_philo(t_arg *shared)
 {
 	int	i;
@@ -54,17 +67,4 @@ int	destroy_philo(t_arg *shared)
 		i++;
 	}
 	return (SUCCESS);
-}
-
-static void	join_philo(t_arg *shared)
-{
-	int	i;
-
-	i = 0;
-	while (i < shared->nb_philo)
-	{
-		pthread_join(shared->philo[i].thread_id, NULL);
-		i++;
-	}
-	return ;
 }
