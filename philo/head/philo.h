@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:40:00 by lciullo           #+#    #+#             */
-/*   Updated: 2023/08/05 18:24:06 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/08/06 14:10:33 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int		init_shared_struct(t_arg *shared);
 int		parsing_input(t_arg *shared, int ac, char **av);
 int		allocated_struct_of_philo(t_arg *shared);
 int		loop_to_init_each_philo(t_arg *shared);
-int		loop_struct(t_arg *shared);
+void	loop_struct(t_arg *shared);
 long	get_time(struct timeval *t_start, t_single *philo);
 void	routine(t_single *philo);
 void	display_routine(t_single *philo, int action);
@@ -93,8 +93,8 @@ int		eating(t_single *philo);
 int		take_fork(t_single *philo);
 int		enough_eat(t_single *philo);
 int		put_down_fork(t_single *philo);
-int		destroy_philo(t_arg *shared);
+void	destroy_philo(t_arg *shared, int nb_philo);
 void	clear_mutex(t_arg *shared);
-void	clear_fill_each_philo(t_arg *shared, int nb_allocation);
+void	clear_fill_each_philo(t_arg *shared, int nb_philo);
 
 #endif

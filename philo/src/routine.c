@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 12:00:19 by lciullo           #+#    #+#             */
-/*   Updated: 2023/08/05 18:22:57 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/08/06 12:09:54 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	routine(t_single *philo)
 	pthread_mutex_lock(&(philo->shared->launcher));
 	pthread_mutex_unlock(&(philo->shared->launcher));
 	if (philo->id % 2 == 1)
-		usleep(40000);
+		usleep(10000);
 	while (philo->is_dead == FALSE)
 	{
 		pthread_mutex_lock(&(philo->shared->watcher));

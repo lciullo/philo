@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 17:39:40 by lciullo           #+#    #+#             */
-/*   Updated: 2023/08/05 16:14:10 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/08/06 14:11:18 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	clear_mutex(t_arg *shared)
 	pthread_mutex_destroy(&(shared->speaker));
 }
 
-void	clear_fill_each_philo(t_arg *shared, int nb_allocation)
+void	clear_fill_each_philo(t_arg *shared, int nb_philo)
 {
 	int	i;
 
@@ -71,7 +71,7 @@ void	clear_fill_each_philo(t_arg *shared, int nb_allocation)
 	pthread_mutex_destroy(&(shared->launcher));
 	pthread_mutex_destroy(&(shared->watcher));
 	pthread_mutex_destroy(&(shared->speaker));
-	while (i < nb_allocation)
+	while (i < nb_philo)
 	{
 		pthread_mutex_destroy(&(shared->philo[i].m_right_fork));
 		i++;

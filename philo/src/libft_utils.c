@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:58:58 by lciullo           #+#    #+#             */
-/*   Updated: 2023/08/05 16:11:38 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/08/06 14:26:10 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,27 +33,25 @@ int	ft_isdigit(int c)
 
 int	ft_atoi(const char *str)
 {
-	int			i;
-	size_t		len;
-	long int	result;
-	int			sign;
+	long int		result;
 
-	i = 0;
 	result = 0;
-	sign = 1;
-	len = ft_strlen(str);
-	if (len > 10)
+	if (!str)
 		return (FAILURE);
-	while (str[i] >= '0' && str[i] <= '9')
+	if (ft_strlen(str) > 10)
+		return (FAILURE);
+	while (*str)
 	{
-		result = result * 10 + (str[i] - 48);
-		if (result != (result * 10 + (str[i] - 48)) / 10 && sign == -1)
+		if (*str >= '0' && *str <= '9')
+		{
+			result = (result * 10) + *str++ - '0';
+			if (result > 2147483647)
+				return (FAILURE);
+		}
+		else
 			return (FAILURE);
-		if (result != (result * 10 + (str[i] - 48)) / 10 && sign == 1)
-			return (FAILURE);
-		i++;
 	}
-	return ((int)(result * sign));
+	return ((int)(result));
 }
 
 void	ft_bzero(void *s, size_t n)

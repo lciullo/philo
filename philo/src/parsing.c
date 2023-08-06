@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 00:35:01 by lciullo           #+#    #+#             */
-/*   Updated: 2023/08/01 17:54:59 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/08/06 11:13:15 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ static int	is_valid_integer_value(t_arg *shared)
 	if ((shared->nb_philo <= 0) || (shared->time_to_die <= 0)
 		|| (shared->time_to_eat <= 0) || (shared->time_to_sleep <= 0))
 	{
-		printf("Error, send digit greater than or equal to zéro\n");
+		printf("Error, send digit greater than or equal to zero\n");
 		return (FAILURE);
 	}
 	if ((shared->time_to_die < 60) || (shared->time_to_eat < 60)

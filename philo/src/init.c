@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fill_struct.c                             :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/20 09:45:57 by lciullo           #+#    #+#             */
-/*   Updated: 2023/08/01 10:04:05 by lisa             ###   ########.fr       */
+/*   Created: 2023/08/05 18:31:18 by lciullo           #+#    #+#             */
+/*   Updated: 2023/08/06 14:18:33 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,21 +32,21 @@ int	init_shared_struct(t_arg *shared)
 
 static	int	init_mutex(t_arg *shared)
 {
-	if (pthread_mutex_init(&(shared->launcher), NULL) == FAILURE)
+	if (pthread_mutex_init(&(shared->launcher), NULL) != 0)
 	{
 		printf("Init mutex launcher failed");
 		return (FAILURE);
 	}
-	if (pthread_mutex_init(&(shared->speaker), NULL) == FAILURE)
+	if (pthread_mutex_init(&(shared->speaker), NULL) != 0)
 	{
 		pthread_mutex_destroy(&(shared->launcher));
 		printf("Init mutex speaker failed");
 		return (FAILURE);
 	}
-	if (pthread_mutex_init(&(shared->watcher), NULL) == FAILURE)
+	if (pthread_mutex_init(&(shared->watcher), NULL) != 0)
 	{
 		pthread_mutex_destroy(&(shared->launcher));
-		pthread_mutex_destroy(&(shared->watcher));
+		pthread_mutex_destroy(&(shared->speaker));
 		printf("Init mutex watcher failed");
 		return (FAILURE);
 	}
@@ -98,8 +98,11 @@ static int	fill_each_philo(t_single *philo, t_single *last, \
 {
 	philo->id = i + 1;
 	philo->right_fork = AVAILABLE;
-	if (pthread_mutex_init(&(philo->m_right_fork), NULL) == FAILURE)
+	if (pthread_mutex_init(&(philo->m_right_fork), NULL) != 0)
+	{
 		clear_fill_each_philo(shared, i);
+		return (FAILURE);
+	}
 	if (last != NULL)
 	{
 		philo->left_fork = &(last->right_fork);

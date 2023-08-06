@@ -6,15 +6,15 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 10:31:38 by lciullo           #+#    #+#             */
-/*   Updated: 2023/08/05 18:11:56 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/08/06 14:11:10 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	join_philo(t_arg *shared);
+static void	join_philo(t_arg *shared, int nb_philo);
 
-int	loop_struct(t_arg *shared)
+void	loop_struct(t_arg *shared)
 {
 	int	i;
 
@@ -26,22 +26,23 @@ int	loop_struct(t_arg *shared)
 				NULL, (void *)routine, &(shared->philo[i])) != 0)
 		{
 			printf("Failed to create thread");
-			return (FAILURE);
+			break ;
 		}
 		i++;
 	}
 	gettimeofday(&shared->t_start, NULL);
 	pthread_mutex_unlock(&(shared->launcher));
-	join_philo(shared);
-	return (SUCCESS);
+	join_philo(shared, i);
+	destroy_philo(shared, i);
+	return ;
 }
 
-static void	join_philo(t_arg *shared)
+static void	join_philo(t_arg *shared, int nb_philo)
 {
 	int	i;
 
 	i = 0;
-	while (i < shared->nb_philo)
+	while (i < nb_philo)
 	{
 		pthread_join(shared->philo[i].thread_id, NULL);
 		i++;
@@ -49,7 +50,7 @@ static void	join_philo(t_arg *shared)
 	return ;
 }
 
-int	destroy_philo(t_arg *shared)
+void	destroy_philo(t_arg *shared, int nb_philo)
 {
 	int	i;
 
@@ -57,14 +58,10 @@ int	destroy_philo(t_arg *shared)
 	pthread_mutex_destroy(&(shared->launcher));
 	pthread_mutex_destroy(&(shared->watcher));
 	pthread_mutex_destroy(&(shared->speaker));
-	while (i < shared->nb_philo - 1)
+	while (i < nb_philo)
 	{
-		if (pthread_mutex_destroy(&(shared->philo[i].m_right_fork)) != 0)
-		{
-			printf("pthread_mutext_destroy: error\n");
-			return (FAILURE);
-		}
+		pthread_mutex_destroy(&(shared->philo[i].m_right_fork));
 		i++;
 	}
-	return (SUCCESS);
+	return ;
 }
